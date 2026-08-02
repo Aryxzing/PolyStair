@@ -32,8 +32,8 @@ SPORTMONKS_PROXY = f"{ARENA}/api/v1/data/proxy/sportmonks/v3/football"
 POLYMARKET_CLOB = f"{ARENA}/api/v1/data/proxy/polymarket-clob"
 POLYMARKET_GAMMA = f"{ARENA}/api/v1/data/proxy/polymarket-gamma"
 
-SUPABASE = "https://ezvbmtvrvzageqixvdak.supabase.co"
-SUPABASE_KEY = "REMOVED_SUPABASE_KEY"
+SUPABASE = os.getenv("SUPABASE_URL", "https://ezvbmtvrvzageqixvdak.supabase.co").rstrip("/")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
 
 SPORTMONKS_SEASON_ID = 26618
 DEFAULT_FIXTURE_ID = 19609127

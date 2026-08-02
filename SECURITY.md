@@ -9,6 +9,6 @@ Do not commit:
 - ZIP exports, logs, raw OpenAPI downloads, or local account reports
 - API keys, bearer tokens, private keys, seed phrases, wallet private keys, or personal wallet/profile URLs
 
-The code may include public/read-only constants such as production API base URLs and public Supabase publishable keys used by the Arena data layer. Live credentials must be supplied through local environment variables.
+The code may include public/read-only service URLs such as the production Arena base URL and Supabase project URL. Do not hardcode credential-shaped values, including publishable API keys. Supply them through local environment variables instead.
 
 Before publishing, run a secret scan over the shareable tree and confirm `.env`, `.venv/`, and `output/` are ignored.

@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SUPABASE = "https://ezvbmtvrvzageqixvdak.supabase.co"
-SUPABASE_KEY = "REMOVED_SUPABASE_KEY"
+SUPABASE = os.getenv("SUPABASE_URL", "https://ezvbmtvrvzageqixvdak.supabase.co").rstrip("/")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
 ARENA = os.getenv("ARENA_BASE_URL", "https://stair-ai.com").rstrip("/")
 ARENA_V1 = os.getenv("ARENA_API_PREFIX", "/api/v1").rstrip("/")
 SPORTMONKS_SEASON_ID = 26618
@@ -26,11 +26,13 @@ def main():
     arena_key = os.getenv("ARENA_KEY")
     anthropic_key = os.getenv("ANTHROPIC_KEY")
     openai_key = os.getenv("OPENAI_API_KEY")
+    supabase_key = os.getenv("SUPABASE_KEY")
 
     print(f"ARENA_BASE_URL: {ARENA}")
     status("ARENA_KEY", bool(arena_key))
     status("OPENAI_API_KEY", bool(openai_key))
     status("ANTHROPIC_KEY", bool(anthropic_key), "optional")
+    status("SUPABASE_KEY", bool(supabase_key))
     status("Model provider", bool(openai_key or anthropic_key or os.getenv("USE_OPENAI") == "0"), "OpenAI/Anthropic or local rules")
 
     catalog_url = f"{SUPABASE}/rest/v1/catalog_full"

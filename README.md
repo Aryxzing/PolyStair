@@ -24,14 +24,15 @@ python -m venv .venv
 Copy-Item .env.example .env
 ```
 
-Then fill in `ARENA_KEY`. OpenAI can stay disabled for the local blended model.
+Then fill in `ARENA_KEY` and the Arena-provided `SUPABASE_KEY`. OpenAI can stay disabled for the local blended model.
 
 For OpenAI, set:
 
 ```text
-OPENAI_API_KEY=sk-...
+OPENAI_API_KEY=replace_me
 USE_OPENAI=0
 ARENA_BASE_URL=https://stair-ai.com
+SUPABASE_KEY=sb_publishable_...
 OPENAI_MODEL=gpt-4.1-mini
 ```
 
