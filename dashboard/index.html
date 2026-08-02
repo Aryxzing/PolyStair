@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PolyStair Agent Operations Center</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="logo">PS</span>
+        <div>
+          <strong>PolyStair</strong>
+          <small>AI Agent Ops</small>
+        </div>
+      </div>
+      <nav>
+        <button class="nav active" data-page="overview">Command</button>
+        <button class="nav" data-page="leaderboard">Leaderboard</button>
+        <button class="nav" data-page="tournament">Tournament</button>
+        <button class="nav" data-page="matches">Upcoming Matches</button>
+        <button class="nav" data-page="reasoning">Reasoning Center</button>
+        <button class="nav" data-page="portfolio">Portfolio</button>
+        <button class="nav" data-page="orders-page">Order History</button>
+        <button class="nav" data-page="performance">Performance</button>
+        <button class="nav" data-page="predictions">Predictions</button>
+        <button class="nav" data-page="confidence-page">Confidence</button>
+        <button class="nav" data-page="competition">Competition</button>
+        <button class="nav" data-page="agent-card">Agent Card</button>
+        <button class="nav" data-page="health">System Health</button>
+        <button class="nav" data-page="system">System</button>
+      </nav>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Stair AI World Cup Agent Arena</p>
+          <h1 id="page-title">Command</h1>
+          <p id="subtitle">Competition-grade operating view for predictions, risk, and readiness.</p>
+          <div class="live-strip">
+            <span id="live-badge" class="status-pill warning">Checking Arena</span>
+            <span id="last-refreshed" class="muted">Last refreshed: --</span>
+            <span id="auto-refresh-label" class="muted">Auto-refresh: 10s</span>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="refresh">Refresh</button>
+          <select id="refresh-interval" aria-label="Auto refresh interval">
+            <option value="0">Auto: Off</option>
+            <option value="10" selected>Auto: 10 sec</option>
+            <option value="30">Auto: 30 sec</option>
+            <option value="60">Auto: 60 sec</option>
+          </select>
+          <button id="screenshot-mode">Screenshot Mode</button>
+          <button id="run-scan">Run Scan</button>
+        </div>
+      </header>
+
+      <section class="status-row" id="production-status"></section>
+
+      <section id="overview" class="page active">
+        <div class="executive">
+          <div class="status-card">
+            <span id="agent-status" class="status-pill">LOADING</span>
+            <h2 id="best-title">Loading agent state...</h2>
+            <p id="best-copy"></p>
+          </div>
+          <div class="score-card">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" class="ring-bg"></circle>
+              <circle cx="60" cy="60" r="52" class="ring" id="score-ring"></circle>
+            </svg>
+            <strong id="readiness">--</strong>
+            <small>readiness</small>
+          </div>
+        </div>
+
+        <div class="kpi-grid" id="executive-kpis"></div>
+        <div class="grid three" id="command-live-cards"></div>
+
+        <div class="grid two">
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Competition Scorecard</h3>
+              <span class="muted">latest local scan</span>
+            </div>
+            <div id="scorecard" class="scorecard"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Visual Analytics</h3>
+              <span class="muted">edge, confidence, quality</span>
+            </div>
+            <div class="chart-grid">
+              <canvas id="edge-chart" width="520" height="180"></canvas>
+              <canvas id="confidence-chart" width="520" height="180"></canvas>
+              <canvas id="grade-chart" width="520" height="180"></canvas>
+              <canvas id="outcome-chart" width="520" height="180"></canvas>
+              <canvas id="trade-chart" width="520" height="180"></canvas>
+              <canvas id="quality-chart" width="520" height="180"></canvas>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="tournament" class="page">
+        <div class="grid two">
+          <section class="panel"><h3>Tournament</h3><div id="tournament-card" class="settings"></div></section>
+          <section class="panel qualification-card"><h3>Qualification</h3><div id="qualification-home"></div></section>
+        </div>
+      </section>
+
+      <section id="matches" class="page">
+        <section class="panel">
+          <div class="panel-head">
+            <div><h3>Upcoming Matches</h3><p class="muted">Operator fixture commands for prematch runs.</p></div>
+            <div class="actions">
+              <input id="match-filter" placeholder="Search fixture/team..." />
+              <select id="match-limit"><option>10</option><option selected>25</option><option>50</option></select>
+            </div>
+          </div>
+          <div id="matches-list" class="matches-list"></div>
+        </section>
+      </section>
+
+      <section id="leaderboard" class="page">
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Opportunity Leaderboard</h3>
+              <p class="muted">Click rows to inspect evidence and reasoning.</p>
+            </div>
+            <input id="filter" placeholder="Filter match or team..." />
+          </div>
+          <div class="sortbar">
+            <button data-sort="edge">Sort Edge</button>
+            <button data-sort="confidence">Sort Confidence</button>
+            <button data-sort="grade">Sort Grade</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Match</th>
+                  <th>Prediction</th>
+                  <th>Probability</th>
+                  <th>Market Mid</th>
+                  <th>Edge</th>
+                  <th>Confidence</th>
+                  <th>Data Quality</th>
+                  <th>Agreement</th>
+                  <th>Grade</th>
+                  <th>Decision</th>
+                </tr>
+              </thead>
+              <tbody id="opportunity-rows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="reasoning" class="page">
+        <div class="grid two">
+          <section class="panel">
+            <h3>Reasoning Explorer</h3>
+            <div id="reasoning-card" class="reasoning-card"></div>
+          </section>
+          <section class="panel">
+            <h3>Explainability</h3>
+            <div id="explainability" class="explainability"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="portfolio" class="page">
+        <div class="grid two">
+          <section class="panel">
+            <h3>Wallet</h3>
+            <div id="wallet" class="settings"></div>
+          </section>
+          <section class="panel">
+            <h3>Portfolio</h3>
+            <div id="positions" class="positions"></div>
+          </section>
+        </div>
+        <section class="panel">
+          <h3>Orders</h3>
+          <div id="orders" class="positions"></div>
+        </section>
+      </section>
+
+      <section id="orders-page" class="page">
+        <section class="panel">
+          <h3>Order History</h3>
+          <div id="orders-history" class="positions"></div>
+        </section>
+      </section>
+
+      <section id="performance" class="page">
+        <div class="grid two">
+          <section class="panel qualification-card">
+            <h3>Reasoning Prize Qualification</h3>
+            <div id="qualification"></div>
+          </section>
+          <section class="panel">
+            <h3>Production Performance</h3>
+            <div id="performance-summary" class="scorecard"></div>
+          </section>
+        </div>
+        <div class="grid two">
+          <section class="panel">
+            <h3>Capital & PnL</h3>
+            <div id="capital-metrics" class="settings"></div>
+          </section>
+          <section class="panel">
+            <h3>Signal Quality</h3>
+            <div id="signal-metrics" class="settings"></div>
+          </section>
+        </div>
+        <section class="panel">
+          <h3>Equity Curve</h3>
+          <div id="equity-placeholder" class="empty-state">Equity curve will populate after settlements/order timestamps are available.</div>
+        </section>
+      </section>
+
+      <section id="predictions" class="page">
+        <section class="panel">
+          <h3>Prediction History</h3>
+          <div id="prediction-history" class="positions"></div>
+        </section>
+      </section>
+
+      <section id="confidence-page" class="page">
+        <section class="panel">
+          <h3>Confidence History</h3>
+          <canvas id="confidence-series-chart" width="920" height="240"></canvas>
+          <div id="confidence-empty" class="empty-state"></div>
+        </section>
+      </section>
+
+      <section id="competition" class="page">
+        <section class="panel">
+          <h3>Competition</h3>
+          <div id="competition-stats" class="settings"></div>
+        </section>
+      </section>
+
+      <section id="agent-card" class="page">
+        <div class="demo-hero">
+          <span class="status-pill ready">DEMO MODE</span>
+          <h2 id="demo-title">PolyStair is ready to present.</h2>
+          <p id="demo-copy"></p>
+        </div>
+        <div class="grid three">
+          <section class="panel">
+            <h3>Best Opportunity</h3>
+            <div id="demo-best"></div>
+          </section>
+          <section class="panel">
+            <h3>Risk Analysis</h3>
+            <div id="demo-risks"></div>
+          </section>
+          <section class="panel">
+            <h3>Performance</h3>
+            <div id="demo-performance"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="health" class="page">
+        <section class="panel">
+          <h3>System Health</h3>
+          <div id="health-grid" class="health-grid"></div>
+        </section>
+      </section>
+
+      <section id="system" class="page">
+        <div class="grid two">
+          <section class="panel">
+            <h3>Runtime Settings</h3>
+            <div id="settings" class="settings"></div>
+          </section>
+          <section class="panel">
+            <h3>Latest Run & Files</h3>
+            <pre id="latest-run"></pre>
+            <div id="files" class="files"></div>
+          </section>
+        </div>
+        <section class="panel">
+          <h3>Exports</h3>
+          <div class="actions export-actions">
+            <button data-export="snapshot">Export Dashboard Snapshot</button>
+            <button data-export="performance">Export Performance JSON</button>
+            <button data-export="trades">Export Trade History JSON</button>
+            <button data-export="qualification">Export Qualification Report</button>
+          </div>
+        </section>
+        <section class="panel">
+          <h3>Command Output</h3>
+          <pre id="command-output">Run a scan to see logs here.</pre>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

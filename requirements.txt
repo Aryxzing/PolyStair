@@ -1,0 +1,4 @@
+anthropic>=0.72.0
+openai>=2.0.0
+python-dotenv>=1.0.1
+requests>=2.32.0
