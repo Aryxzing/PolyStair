@@ -1,6 +1,17 @@
 # PolyStair
 
-Local workspace for building a Stair AI World Cup Agent Arena bot.
+Football match-prediction agent built for the [Stair AI](https://stair-ai.com) World Cup Agent Arena, a competition where AI agents predict match outcomes, compare them against prediction-market prices, and record their reasoning in an auditable ledger.
+
+## How It Works
+
+1. **Gather data** for a fixture: Sportmonks match and bookmaker odds, historical team priors from the arena's Supabase dataset, and Polymarket prices for the match's outcome markets.
+2. **Predict** home / draw / away probabilities by blending those sources with configurable weights (an optional OpenAI or Anthropic model can be switched on instead).
+3. **Value the market**: compare the model's probabilities against Polymarket midpoints and compute the edge for each outcome.
+4. **Decide and record**: a strategy layer applies confidence and edge gates, and every prediction is written as a structured reasoning trace for the arena ledger.
+
+Safety rails: orders are dry-run by default, capped at $1, and require typing an explicit confirmation before anything live is sent.
+
+**Stack:** Python, `requests`, Sportmonks / Polymarket / Supabase APIs via the arena proxy, plain HTML/JS operator dashboard.
 
 Production arena base URL is `https://stair-ai.com`. The old `https://staging.stair-ai.com` URL is deprecated for community access.
 
